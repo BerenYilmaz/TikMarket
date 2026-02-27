@@ -29,4 +29,4 @@
 
 # Gereksinim Dağılımları
 
-1. [Beren Yılmaz'ın Gereksinimleri](Beren-Yilmaz/Beren-Yilmaz-Gereksinimler.md)
+1. [Beren Yılmaz'ın Gereksinimleri](Beren-Yilmaz/Beren-YIlmaz-Gereksinimler.md)
