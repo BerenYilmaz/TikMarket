@@ -1,31 +1,32 @@
-# Gereksinim Analizi
 
-Tüm gereksinimlerinizi çıkardıktan sonra beraber tartışıyoruz ve son gereksinimlerin isimlerini hangi API metoduna karşılık geleceğini ve kısa açıklamalarını buraya numaralı bir şekilde yazıyorsunuz. Daha sonra aşağıya herkes kendi gereksinimiyle ilgili sayfayı oluşturmalı ve kendi sayfasında kendine ait gereksinimleri numaralı bir şekilde listeleyerek her bir gereksinimin açıklamalarını yazmalı. Toplamda grup üyesi sayısı kadar sayfa oluşturulmalı. Her grup üyesine eşit sayıda gereksinim atanmalı.
+# Tüm Gereksinimler *
 
-## Gereksinim Sayıları (En Az)
+1. **Ürün Ekle** (Beren Yılmaz)
 
-- **1 Kişi:** 10 gereksinim
-- **2 Kişi:** 16 gereksinim
-- **3 Kişi:** 21 gereksinim
-- **4 Kişi:** 24 gereksinim
-- **5 Kişi:** 30 gereksinim
+2. **Ürün Güncelle** (Beren Yılmaz)
 
-## Gereksinimlerde Uyulması Gereken Kurallar
+3. **Ürün Sil** (Beren Yılmaz)
 
-1. **İsimler anlamlı olmalı:** Gereksinim isimleri net ve anlaşılır olmalıdır.
-2. **Açıklamalar net olmalı:** Her gereksinimin açıklaması açık ve anlaşılır şekilde yazılmalıdır.
-3. **Açıklamalar teknik jargon ve kısaltmalar içermemeli:** Gereksinim açıklamaları herkesin anlayabileceği basit bir dille yazılmalıdır.
-4. **Gereksinim isimleri çok uzun olmamalı ve bir eylem bildirmeli:** 
-   - İsimler kısa ve öz olmalıdır
-   - Bir eylem fiili içermelidir
-   - Örnekler: "Kayıt Olma", "Giriş Yapma", "Profil Güncelleme", "Hesap Silme"
+4. **Ürün Görüntüle** (Beren Yılmaz)
 
-# Tüm Gereksinimler 
+5. **Sepete Ürün Ekle** (Beren Yılmaz)
 
-1. **Giriş Yapma** (Ali Tutar)
-2. **Üye Olma** (Ali Tutar)
-3. ..
-4. ..
+6. **Sepetten Ürün Sil** (Beren Yılmaz)
+
+7. **Sepeti Güncelle** (Beren Yılmaz)
+
+8. **Sepeti Görüntüle** (Beren Yılmaz)
+
+9. **Giriş Yap** (Beren Yılmaz)
+
+10. **Kayıt Ol** (Beren Yılmaz)
+
+11. **Adres Ekleme** (Beren Yılmaz)
+
+12. **Adres Silme** (Beren Yılmaz)
+
+13. **Admin Paneli** (Beren Yılmaz)
+
 # Gereksinim Dağılımları
 
-1. [Beren Yılmaz'ın Gereksinimleri](Ali-Tutar/Ali-Tutar-Gereksinimler.md)
+1. [Beren Yılmaz'ın Gereksinimleri](Beren-Yilmaz/Beren-Yilmaz-Gereksinimler.md)
