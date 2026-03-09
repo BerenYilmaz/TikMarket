@@ -1,30 +1,14 @@
-# API Tasarımı - OpenAPI Specification
-
-**OpenAPI Spesifikasyon Dosyası:** [TikMarket_API.yaml](TikMarket_API.yaml)
-
-Bu doküman, OpenAPI Specification (OAS) 3.0 standardına göre hazırlanmış TikMarket giyim, takı ve aksesuar platformu API tasarımını içermektedir.
-
-## OpenAPI Specification
-
-```yaml
 openapi: 3.0.3
 info:
   title: TikMarket API
-  description: |
-    TikMarket giyim, takı ve aksesuar e-ticaret platformu için RESTful API.
-
-    ## Özellikler
-    - Kullanıcı kimlik doğrulaması ve kayıt
-    - Ürün kataloğu yönetimi
-    - Alışveriş sepeti işlemleri
-    - Kullanıcı adres yönetimi
-    - JWT tabanlı kimlik doğrulama
-    - Yönetici paneli
   version: 1.0.0
+  description: >
+    Bu API, TikMarket giyim, takı ve aksesuar platformu için tasarlanmış bir RESTful servistir.
+    Ürün yönetimi, kullanıcı kimlik doğrulaması, alışveriş sepeti, adres yönetimi ve
+    yönetici paneli işlemlerini destekler. API, JWT tabanlı kimlik doğrulama ile korunmaktadır.
   contact:
-    name: TikMarket Geliştirici Ekibi
-    email: dev@tikmarket.com
-    url: https://api.tikmarket.com/support
+    name: ByTech
+    email: berennyilmaz03@gmail.com
 
 servers:
   - url: https://api.tikmarket.com
@@ -35,98 +19,105 @@ servers:
     description: Yerel geliştirme sunucusu (Development)
 
 tags:
-  - name: auth
-    description: Kimlik doğrulama işlemleri
-  - name: products
-    description: Ürün katalog işlemleri
-  - name: cart
-    description: Alışveriş sepeti işlemleri
-  - name: users
-    description: Kullanıcı adres yönetimi
-  - name: admin
+  - name: Kimlik Doğrulama
+    description: Kullanıcı giriş ve kayıt işlemleri
+  - name: Ürünler
+    description: Ürün ekleme, görüntüleme, güncelleme ve silme işlemleri
+  - name: Sepet
+    description: Alışveriş sepeti yönetimi işlemleri
+  - name: Kullanıcılar
+    description: Kullanıcı adres yönetimi işlemleri
+  - name: Admin
     description: Yönetici paneli işlemleri
 
+security:
+  - BearerAuth: []
+
 paths:
+
+  # ──────────────────────────────────────────────
+  # KİMLİK DOĞRULAMA
+  # ──────────────────────────────────────────────
 
   /api/auth/login:
     post:
       tags:
-        - auth
+        - Kimlik Doğrulama
       summary: Giriş Yap
-      description: Kayıtlı kullanıcıların e-posta ve şifreleriyle sisteme giriş yaparak güvenli oturum açmalarını sağlar.
       operationId: loginUser
       security: []
+      description: Kayıtlı kullanıcıların e-posta ve şifreleriyle sisteme giriş yaparak güvenli oturum açmalarını sağlar.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/LoginInput'
-            examples:
-              example1:
-                summary: Örnek kullanıcı girişi
-                value:
-                  email: kullanici@example.com
-                  password: Sifre123!
       responses:
-        '200':
+        "200":
           description: Giriş başarılı, JWT token döndürüldü
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+        "400":
+          description: Geçersiz istek verisi (eksik alan vb.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: E-posta veya şifre hatalı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/auth/register:
     post:
       tags:
-        - auth
+        - Kimlik Doğrulama
       summary: Kayıt Ol
-      description: Yeni kullanıcıların sisteme hesap oluşturarak dahil olmasını sağlar. Kişisel kayıt bilgilerinin toplanmasını içerir.
       operationId: registerUser
       security: []
+      description: Yeni kullanıcıların sisteme hesap oluşturarak dahil olmasını sağlar. Kişisel kayıt bilgilerinin toplanmasını içerir.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RegisterInput'
-            examples:
-              example1:
-                summary: Örnek kullanıcı kaydı
-                value:
-                  name: Ayşe Kaya
-                  email: kullanici@example.com
-                  password: Sifre123!
-                  phone: "05321234567"
       responses:
-        '201':
+        "201":
           description: Kullanıcı başarıyla oluşturuldu
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '409':
+        "400":
+          description: Geçersiz istek verisi (eksik alan, zayıf şifre vb.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "409":
           description: Bu e-posta adresi zaten kayıtlı
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  # ──────────────────────────────────────────────
+  # ÜRÜNLER
+  # ──────────────────────────────────────────────
+
   /api/products:
     post:
       tags:
-        - products
+        - Ürünler
       summary: Ürün Ekle
-      description: TikMarket sistemine yeni giyim, takı ve aksesuar ürünlerinin eklenmesini sağlar. Ürün bilgilerinin ve stok verilerinin kaydedilmesini içerir.
       operationId: addProduct
-      security:
-        - bearerAuth: []
+      description: TikMarket sistemine yeni giyim, takı ve aksesuar ürünlerinin eklenmesini sağlar. Ürün bilgilerinin ve stok verilerinin kaydedilmesini içerir.
       requestBody:
         required: true
         content:
@@ -134,50 +125,73 @@ paths:
             schema:
               $ref: '#/components/schemas/ProductInput'
       responses:
-        '201':
+        "201":
           description: Ürün başarıyla eklendi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
+        "400":
+          description: Geçersiz istek verisi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Bu işlem için yetkiniz bulunmuyor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/products/{productId}:
+    parameters:
+      - name: productId
+        in: path
+        required: true
+        description: Ürünün benzersiz kimlik numarası
+        schema:
+          type: string
+        example: "prod_001"
+
     get:
       tags:
-        - products
+        - Ürünler
       summary: Ürün Görüntüle
-      description: Ürünlerin detaylı bilgilerinin, fiyatlarının ve görsellerinin kullanıcılar tarafından incelenmesini sağlar.
       operationId: getProduct
-      parameters:
-        - $ref: '#/components/parameters/ProductIdParam'
+      description: Ürünlerin detaylı bilgilerinin, fiyatlarının ve görsellerinin kullanıcılar tarafından incelenmesini sağlar.
       responses:
-        '200':
+        "200":
           description: Ürün başarıyla getirildi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Ürün bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     put:
       tags:
-        - products
+        - Ürünler
       summary: Ürün Güncelle
-      description: Mevcut ürünlerin fiyat, açıklama ve kategori gibi bilgilerinin güncellenmesini sağlar.
       operationId: updateProduct
-      security:
-        - bearerAuth: []
-      parameters:
-        - $ref: '#/components/parameters/ProductIdParam'
+      description: Mevcut ürünlerin fiyat, açıklama ve kategori gibi bilgilerinin güncellenmesini sağlar.
       requestBody:
         required: true
         content:
@@ -185,106 +199,145 @@ paths:
             schema:
               $ref: '#/components/schemas/ProductInput'
       responses:
-        '200':
+        "200":
           description: Ürün başarıyla güncellendi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "400":
+          description: Geçersiz istek verisi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Bu işlem için yetkiniz bulunmuyor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Ürün bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     delete:
       tags:
-        - products
+        - Ürünler
       summary: Ürün Sil
-      description: Belirli bir ürünün sistemden kalıcı olarak silinmesini sağlar. Bu işlemden sonra ürün platformda görüntülenemez.
       operationId: deleteProduct
-      security:
-        - bearerAuth: []
-      parameters:
-        - $ref: '#/components/parameters/ProductIdParam'
+      description: Belirli bir ürünün sistemden kalıcı olarak silinmesini sağlar. Bu işlemden sonra ürün platformda görüntülenemez.
       responses:
-        '204':
+        "204":
           description: Ürün başarıyla silindi
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Bu işlem için yetkiniz bulunmuyor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Ürün bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ──────────────────────────────────────────────
+  # SEPET
+  # ──────────────────────────────────────────────
 
   /api/cart:
     get:
       tags:
-        - cart
+        - Sepet
       summary: Sepeti Görüntüle
-      description: Kullanıcının sepetine eklediği ürünlerin listesini ve ödenecek toplam tutarı gösterir.
       operationId: getCart
-      security:
-        - bearerAuth: []
+      description: Kullanıcının sepetine eklediği ürünlerin listesini ve ödenecek toplam tutarı gösterir.
       responses:
-        '200':
+        "200":
           description: Sepet başarıyla getirildi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/cart/items:
     post:
       tags:
-        - cart
+        - Sepet
       summary: Sepete Ürün Ekle
-      description: Kullanıcıların beğendikleri ürünleri satın almak üzere kişisel alışveriş sepetlerine eklemelerine olanak tanır.
       operationId: addCartItem
-      security:
-        - bearerAuth: []
+      description: Kullanıcıların beğendikleri ürünleri satın almak üzere kişisel alışveriş sepetlerine eklemelerine olanak tanır.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CartItemInput'
-            examples:
-              example1:
-                summary: Sepete ürün ekleme örneği
-                value:
-                  productId: "prod_001"
-                  quantity: 2
       responses:
-        '201':
+        "201":
           description: Ürün sepete başarıyla eklendi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "400":
+          description: Geçersiz istek verisi (stok yetersiz vb.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Ürün bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/cart/items/{itemId}:
+    parameters:
+      - name: itemId
+        in: path
+        required: true
+        description: Sepet öğesinin benzersiz kimlik numarası
+        schema:
+          type: string
+        example: "item_789"
+
     put:
       tags:
-        - cart
+        - Sepet
       summary: Sepeti Güncelle
-      description: Sepetteki ürünlerin adet miktarının artırılması veya azaltılması işlemlerini gerçekleştirir.
       operationId: updateCartItem
-      security:
-        - bearerAuth: []
-      parameters:
-        - $ref: '#/components/parameters/ItemIdParam'
+      description: Sepetteki ürünlerin adet miktarının artırılması veya azaltılması işlemlerini gerçekleştirir.
       requestBody:
         required: true
         content:
@@ -292,162 +345,178 @@ paths:
             schema:
               $ref: '#/components/schemas/CartItemUpdateInput'
       responses:
-        '200':
+        "200":
           description: Sepet öğesi başarıyla güncellendi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "400":
+          description: Geçersiz istek verisi (stok yetersiz vb.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Sepet öğesi bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     delete:
       tags:
-        - cart
+        - Sepet
       summary: Sepetten Ürün Sil
-      description: Kullanıcının sepetinden çıkarmak istediği ürünlerin temizlenmesini ve sepet tutarının güncellenmesini sağlar.
       operationId: removeCartItem
-      security:
-        - bearerAuth: []
-      parameters:
-        - $ref: '#/components/parameters/ItemIdParam'
+      description: Kullanıcının sepetinden çıkarmak istediği ürünlerin temizlenmesini ve sepet tutarının güncellenmesini sağlar.
       responses:
-        '204':
+        "204":
           description: Ürün sepetten başarıyla silindi
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Sepet öğesi bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ──────────────────────────────────────────────
+  # KULLANICLAR - ADRES YÖNETİMİ
+  # ──────────────────────────────────────────────
 
   /api/users/addresses:
     post:
       tags:
-        - users
+        - Kullanıcılar
       summary: Adres Ekle
-      description: Kullanıcının sipariş teslimatları için yeni adres bilgilerini profiline kaydetmesini sağlar.
       operationId: addAddress
-      security:
-        - bearerAuth: []
+      description: Kullanıcının sipariş teslimatları için yeni adres bilgilerini profiline kaydetmesini sağlar.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AddressInput'
-            examples:
-              example1:
-                summary: Örnek adres ekleme
-                value:
-                  title: Ev
-                  fullName: Ayşe Kaya
-                  phone: "05321234567"
-                  city: Antalya
-                  district: Muratpaşa
-                  addressLine: Atatürk Cad. No:5 D:3, Meltem Mah.
-                  postalCode: "07100"
       responses:
-        '201':
+        "201":
           description: Adres başarıyla eklendi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Address'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+        "400":
+          description: Geçersiz istek verisi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/users/addresses/{addressId}:
+    parameters:
+      - name: addressId
+        in: path
+        required: true
+        description: Adresin benzersiz kimlik numarası
+        schema:
+          type: string
+        example: "addr_321"
+
     delete:
       tags:
-        - users
+        - Kullanıcılar
       summary: Adres Sil
-      description: Kullanıcının artık kullanmadığı kayıtlı adreslerini sistemden kaldırmasına imkan tanır.
       operationId: deleteAddress
-      security:
-        - bearerAuth: []
-      parameters:
-        - $ref: '#/components/parameters/AddressIdParam'
+      description: Kullanıcının artık kullanmadığı kayıtlı adreslerini sistemden kaldırmasına imkan tanır.
       responses:
-        '204':
+        "204":
           description: Adres başarıyla silindi
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Bu işlem için yetkiniz bulunmuyor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Adres bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ──────────────────────────────────────────────
+  # ADMİN PANELİ
+  # ──────────────────────────────────────────────
 
   /api/admin/dashboard:
     get:
       tags:
-        - admin
+        - Admin
       summary: Admin Paneli
-      description: Sadece yöneticilerin erişebildiği, satış verilerinin ve genel sistem durumunun izlendiği yönetim merkezidir.
       operationId: getAdminDashboard
-      security:
-        - bearerAuth: []
+      description: Sadece yöneticilerin erişebildiği, satış verilerinin ve genel sistem durumunun izlendiği yönetim merkezidir.
       responses:
-        '200':
+        "200":
           description: Admin panel verileri başarıyla getirildi
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdminDashboard'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
+        "401":
+          description: Kimlik doğrulama başarısız (token eksik veya geçersiz)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "403":
+          description: Bu alana yalnızca yöneticiler erişebilir
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+# ──────────────────────────────────────────────
+# COMPONENTS
+# ──────────────────────────────────────────────
 
 components:
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    BearerAuth:
+      type: apiKey
+      in: header
+      name: Authorization
       description: 'JWT tabanlı kimlik doğrulama. İstek başlığına "Authorization: Bearer <token>" eklenmeli.'
 
-  parameters:
-    ProductIdParam:
-      name: productId
-      in: path
-      required: true
-      description: Ürünün benzersiz kimlik numarası
-      schema:
-        type: string
-        format: uuid
-      example: "prod_001"
-
-    ItemIdParam:
-      name: itemId
-      in: path
-      required: true
-      description: Sepet öğesinin benzersiz kimlik numarası
-      schema:
-        type: string
-        format: uuid
-      example: "item_789"
-
-    AddressIdParam:
-      name: addressId
-      in: path
-      required: true
-      description: Adresin benzersiz kimlik numarası
-      schema:
-        type: string
-        format: uuid
-      example: "addr_321"
-
   schemas:
+
+    # ── KİMLİK DOĞRULAMA ──
+
     LoginInput:
       type: object
-      required:
-        - email
-        - password
+      description: Kullanıcı giriş isteği için gönderilecek veri
       properties:
         email:
           type: string
@@ -460,13 +529,13 @@ components:
           description: Kullanıcının şifresi
           minLength: 6
           example: "Sifre123!"
+      required:
+        - email
+        - password
 
     RegisterInput:
       type: object
-      required:
-        - name
-        - email
-        - password
+      description: Yeni kullanıcı kayıt isteği için gönderilecek veri
       properties:
         name:
           type: string
@@ -489,37 +558,31 @@ components:
           type: string
           description: Kullanıcının telefon numarası
           example: "05321234567"
+      required:
+        - name
+        - email
+        - password
 
     AuthResponse:
       type: object
-      required:
-        - token
-        - expiresIn
-        - user
+      description: Başarılı giriş veya kayıt sonrası döndürülen kimlik doğrulama yanıtı
       properties:
         token:
           type: string
           description: JWT kimlik doğrulama token'ı
           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        expiresIn:
-          type: integer
-          description: Token geçerlilik süresi (saniye)
-          example: 3600
         user:
           $ref: '#/components/schemas/User'
+      required:
+        - token
+        - user
 
     User:
       type: object
-      required:
-        - _id
-        - name
-        - email
-        - role
-        - createdAt
+      description: Kullanıcı bilgilerini temsil eden model
       properties:
         _id:
           type: string
-          format: uuid
           description: Kullanıcının benzersiz kimlik numarası (otomatik atanır)
           example: "usr_001"
         name:
@@ -545,24 +608,18 @@ components:
           format: date-time
           description: Hesabın oluşturulma tarihi (ISO 8601)
           example: "2026-01-15T10:00:00Z"
-        updatedAt:
-          type: string
-          format: date-time
-          description: Hesabın güncellenme tarihi (ISO 8601)
-          example: "2026-02-20T14:30:00Z"
+      required:
+        - name
+        - email
+
+    # ── ÜRÜNLER ──
 
     Product:
       type: object
-      required:
-        - _id
-        - name
-        - price
-        - category
-        - stock
+      description: Ürün bilgilerini temsil eden model
       properties:
         _id:
           type: string
-          format: uuid
           description: Ürünün benzersiz kimlik numarası (otomatik atanır)
           example: "prod_001"
         name:
@@ -601,19 +658,15 @@ components:
           format: date-time
           description: Ürünün eklenme tarihi (ISO 8601)
           example: "2026-02-01T09:00:00Z"
-        updatedAt:
-          type: string
-          format: date-time
-          description: Ürünün güncellenme tarihi (ISO 8601)
-          example: "2026-03-01T11:00:00Z"
-
-    ProductInput:
-      type: object
       required:
         - name
         - price
         - category
         - stock
+
+    ProductInput:
+      type: object
+      description: Ürün oluşturma veya güncelleme isteği için gönderilecek veri
       properties:
         name:
           type: string
@@ -649,23 +702,24 @@ components:
             type: string
             format: uri
           example: ["https://cdn.tikmarket.com/prod_001_1.jpg"]
+      required:
+        - name
+        - price
+        - category
+        - stock
+
+    # ── SEPET ──
 
     Cart:
       type: object
-      required:
-        - _id
-        - userId
-        - items
-        - totalPrice
+      description: Kullanıcının alışveriş sepetini temsil eden model
       properties:
         _id:
           type: string
-          format: uuid
           description: Sepetin benzersiz kimlik numarası
           example: "cart_111"
         userId:
           type: string
-          format: uuid
           description: Sepetin ait olduğu kullanıcının kimlik numarası
           example: "usr_001"
         items:
@@ -683,18 +737,17 @@ components:
           format: date-time
           description: Sepetin son güncellenme tarihi (ISO 8601)
           example: "2026-03-01T12:00:00Z"
+      required:
+        - userId
+        - items
+        - totalPrice
 
     CartItem:
       type: object
-      required:
-        - _id
-        - product
-        - quantity
-        - subtotal
+      description: Sepetteki tek bir ürün öğesini temsil eden model
       properties:
         _id:
           type: string
-          format: uuid
           description: Sepet öğesinin benzersiz kimlik numarası
           example: "item_789"
         product:
@@ -709,16 +762,16 @@ components:
           format: float
           description: Bu öğenin ara toplamı (fiyat × adet, TL)
           example: 749.97
+      required:
+        - product
+        - quantity
 
     CartItemInput:
       type: object
-      required:
-        - productId
-        - quantity
+      description: Sepete ürün ekleme isteği için gönderilecek veri
       properties:
         productId:
           type: string
-          format: uuid
           description: Sepete eklenecek ürünün kimlik numarası
           example: "prod_001"
         quantity:
@@ -727,32 +780,30 @@ components:
           minimum: 1
           default: 1
           example: 2
+      required:
+        - productId
+        - quantity
 
     CartItemUpdateInput:
       type: object
-      required:
-        - quantity
+      description: Sepet öğesi güncelleme isteği için gönderilecek veri
       properties:
         quantity:
           type: integer
           description: Güncellenecek ürün adedi
           minimum: 1
           example: 5
+      required:
+        - quantity
+
+    # ── ADRES ──
 
     Address:
       type: object
-      required:
-        - _id
-        - title
-        - fullName
-        - phone
-        - city
-        - district
-        - addressLine
+      description: Kullanıcı adres bilgilerini temsil eden model
       properties:
         _id:
           type: string
-          format: uuid
           description: Adresin benzersiz kimlik numarası (otomatik atanır)
           example: "addr_321"
         title:
@@ -783,9 +834,6 @@ components:
           type: string
           description: Posta kodu
           example: "07100"
-
-    AddressInput:
-      type: object
       required:
         - title
         - fullName
@@ -793,6 +841,10 @@ components:
         - city
         - district
         - addressLine
+
+    AddressInput:
+      type: object
+      description: Adres ekleme isteği için gönderilecek veri
       properties:
         title:
           type: string
@@ -827,14 +879,19 @@ components:
           type: string
           description: Posta kodu
           example: "07100"
+      required:
+        - title
+        - fullName
+        - phone
+        - city
+        - district
+        - addressLine
+
+    # ── ADMİN PANELİ ──
 
     AdminDashboard:
       type: object
-      required:
-        - totalSales
-        - totalOrders
-        - totalUsers
-        - totalProducts
+      description: Yönetici panel özet verilerini temsil eden model
       properties:
         totalSales:
           type: number
@@ -881,72 +938,21 @@ components:
                 type: string
                 format: date-time
                 example: "2026-03-06T18:45:00Z"
+      required:
+        - totalSales
+        - totalOrders
+        - totalUsers
+        - totalProducts
+
+    # ── HATA ──
 
     Error:
       type: object
-      required:
-        - code
-        - message
+      description: Hata durumlarında döndürülen standart hata yanıtı
       properties:
-        code:
-          type: string
-          description: Hata kodu
-          example: "VALIDATION_ERROR"
         message:
           type: string
           description: Hatayı açıklayan mesaj
-          example: "Geçersiz e-posta adresi"
-        details:
-          type: array
-          description: Detaylı hata bilgileri
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                example: "email"
-              message:
-                type: string
-                example: "Email formatı geçersiz"
-
-  responses:
-    BadRequest:
-      description: Geçersiz istek
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: "BAD_REQUEST"
-            message: "İstek parametreleri geçersiz"
-
-    Unauthorized:
-      description: Yetkisiz erişim
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: "UNAUTHORIZED"
-            message: "Kimlik doğrulama başarısız"
-
-    Forbidden:
-      description: Erişim reddedildi
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: "FORBIDDEN"
-            message: "Bu işlem için yetkiniz bulunmamaktadır"
-
-    NotFound:
-      description: Kaynak bulunamadı
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: "NOT_FOUND"
-            message: "İstenen kaynak bulunamadı"
-```
+          example: "Ürün bulunamadı"
+      required:
+        - message

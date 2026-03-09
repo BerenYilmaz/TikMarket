@@ -45,7 +45,7 @@ Neden TikMarket?
 ## Proje Ekibi
 
 **Grup Adı:** 
-> BY Software Labs
+> ByTech
 
 **Ekip Üyeleri:** 
 - Beren Yılmaz
