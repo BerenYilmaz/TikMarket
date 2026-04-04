@@ -1,0 +1,26 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/users/addresses
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer YOUR_TOKEN_HERE
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"Ev\",\r
+
+    \  \"fullName\": \"Beren Yilmaz\",\r
+
+    \  \"phone\": \"05551234567\",\r
+
+    \  \"city\": \"Antalya\",\r
+
+    \  \"district\": \"Muratpasa\",\r
+
+    \  \"addressLine\": \"Ataturk Cad. No:5 D:3\",\r
+
+    \  \"postalCode\": \"07100\"\r
+
+    }"
+order: 11000

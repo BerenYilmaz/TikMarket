@@ -1,0 +1,10 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/cart/items/ITEM_ID_HERE
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer YOUR_TOKEN_HERE
+body:
+  type: json
+  content: "{\r\n  \"quantity\": 5\r\n}"
+order: 9000

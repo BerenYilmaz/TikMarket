@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "TikMarket API - Beren",
+    "_postman_id": "tikmarket-beren-2026",
+    "description": "TikMarket E-Commerce REST API - All 13 endpoints tested by Beren Yilmaz",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 - Register User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Beren Yilmaz\",\r\n  \"email\": \"beren@example.com\",\r\n  \"password\": \"beren1234\",\r\n  \"phone\": \"05551234567\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/auth/register",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "auth", "register"]
+        }
+      }
+    },
+    {
+      "name": "2 - Login User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"beren@example.com\",\r\n  \"password\": \"beren1234\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/auth/login",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "3 - Add Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Oversize Sweatshirt\",\r\n  \"description\": \"Rahat kesim unisex sweatshirt, %100 pamuk\",\r\n  \"price\": 299.99,\r\n  \"category\": \"giyim\",\r\n  \"stock\": 25,\r\n  \"images\": [\"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400\"]\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/products",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "products"]
+        }
+      }
+    },
+    {
+      "name": "4 - Get Product",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/products/PRODUCT_ID_HERE",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "products", "PRODUCT_ID_HERE"]
+        }
+      }
+    },
+    {
+      "name": "5 - Update Product",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"price\": 249.99,\r\n  \"stock\": 40\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/products/PRODUCT_ID_HERE",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "products", "PRODUCT_ID_HERE"]
+        }
+      }
+    },
+    {
+      "name": "6 - Delete Product",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/products/PRODUCT_ID_HERE",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "products", "PRODUCT_ID_HERE"]
+        }
+      }
+    },
+    {
+      "name": "7 - Add Item to Cart",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"productId\": \"PRODUCT_ID_HERE\",\r\n  \"quantity\": 2\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/cart/items",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "cart", "items"]
+        }
+      }
+    },
+    {
+      "name": "8 - View Cart",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/cart",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "cart"]
+        }
+      }
+    },
+    {
+      "name": "9 - Update Cart Item",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"quantity\": 5\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/cart/items/ITEM_ID_HERE",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "cart", "items", "ITEM_ID_HERE"]
+        }
+      }
+    },
+    {
+      "name": "10 - Remove Cart Item",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/cart/items/ITEM_ID_HERE",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "cart", "items", "ITEM_ID_HERE"]
+        }
+      }
+    },
+    {
+      "name": "11 - Add Address",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Ev\",\r\n  \"fullName\": \"Beren Yilmaz\",\r\n  \"phone\": \"05551234567\",\r\n  \"city\": \"Antalya\",\r\n  \"district\": \"Muratpasa\",\r\n  \"addressLine\": \"Ataturk Cad. No:5 D:3\",\r\n  \"postalCode\": \"07100\"\r\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/users/addresses",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "users", "addresses"]
+        }
+      }
+    },
+    {
+      "name": "12 - Delete Address",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer YOUR_TOKEN_HERE" }
+        ],
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/users/addresses/ADDRESS_ID_HERE",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "users", "addresses", "ADDRESS_ID_HERE"]
+        }
+      }
+    },
+    {
+      "name": "13 - Admin Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer YOUR_ADMIN_TOKEN_HERE" }
+        ],
+        "url": {
+          "raw": "https://tikmarket-api.onrender.com/api/admin/dashboard",
+          "protocol": "https",
+          "host": ["tikmarket-api", "onrender", "com"],
+          "path": ["api", "admin", "dashboard"]
+        }
+      }
+    }
+  ]
+}

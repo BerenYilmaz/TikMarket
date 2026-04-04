@@ -1,0 +1,25 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/products
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer YOUR_TOKEN_HERE
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Oversize Sweatshirt\",\r
+
+    \  \"description\": \"Rahat kesim unisex sweatshirt, %100 pamuk\",\r
+
+    \  \"price\": 299.99,\r
+
+    \  \"category\": \"giyim\",\r
+
+    \  \"stock\": 25,\r
+
+    \  \"images\":
+    [\"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400\"]\r
+
+    }"
+order: 3000

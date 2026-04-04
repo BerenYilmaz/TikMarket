@@ -37,8 +37,8 @@ Neden TikMarket?
 
 ## Proje Linkleri
 
-- **REST API Adresi:** [api.yazmuh.com](https://api.yazmuh.com)
-- **Web Frontend Adresi:** [frontend.yazmuh.com](https://frontend.yazmuh.com)
+- **REST API Adresi:** [api.yazmuh.com](https://tikmarket-api.onrender.com)
+- **Web Frontend Adresi:** [frontend.yazmuh.com](https://tik-market-fmbxnm54a-berenyilmazs-projects.vercel.app)
 
 ---
 

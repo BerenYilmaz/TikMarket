@@ -1,0 +1,19 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/auth/register
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Beren Yilmaz\",\r
+
+    \  \"email\": \"beren@example.com\",\r
+
+    \  \"password\": \"beren1234\",\r
+
+    \  \"phone\": \"05551234567\"\r
+
+    }"
+order: 1000

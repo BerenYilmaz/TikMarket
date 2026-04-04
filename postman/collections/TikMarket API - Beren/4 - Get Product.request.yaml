@@ -1,0 +1,4 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/products/PRODUCT_ID_HERE
+method: GET
+order: 4000

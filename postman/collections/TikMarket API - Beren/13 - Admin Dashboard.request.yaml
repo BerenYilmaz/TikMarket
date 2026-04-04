@@ -1,0 +1,6 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/admin/dashboard
+method: GET
+headers:
+  Authorization: Bearer YOUR_ADMIN_TOKEN_HERE
+order: 13000

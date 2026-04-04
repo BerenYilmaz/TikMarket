@@ -1,0 +1,6 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/cart
+method: GET
+headers:
+  Authorization: Bearer YOUR_TOKEN_HERE
+order: 8000

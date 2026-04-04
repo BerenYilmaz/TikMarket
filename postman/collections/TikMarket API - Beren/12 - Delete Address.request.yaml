@@ -1,0 +1,6 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/users/addresses/ADDRESS_ID_HERE
+method: DELETE
+headers:
+  Authorization: Bearer YOUR_TOKEN_HERE
+order: 12000

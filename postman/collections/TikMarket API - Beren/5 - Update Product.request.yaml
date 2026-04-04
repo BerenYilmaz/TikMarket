@@ -1,0 +1,16 @@
+$kind: http-request
+url: https://tikmarket-api.onrender.com/api/products/PRODUCT_ID_HERE
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: Bearer YOUR_TOKEN_HERE
+body:
+  type: json
+  content: "{\r
+
+    \  \"price\": 249.99,\r
+
+    \  \"stock\": 40\r
+
+    }"
+order: 5000
