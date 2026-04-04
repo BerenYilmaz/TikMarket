@@ -16,7 +16,10 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: process.env.NODE_ENV === "production" ? "*" : "http://localhost:3000",
+  origin: [
+    "http://localhost:3000",
+    "https://tik-market-fmbxnm54a-berenyilmazs-projects.vercel.app"
+  ],
   credentials: true,
 }));
 app.use(express.json());
