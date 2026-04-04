@@ -2,7 +2,7 @@
 
 **Deployed API:** `https://tikmarket-api.onrender.com`
 
-**API Test Videosu:** [Link buraya eklenecek](https://example.com)
+**API Test Videosu:** [Link buraya eklenecek](https://www.youtube.com/watch?v=E5nQHRra_vE)
 
 ---
 

@@ -68,33 +68,40 @@ export default function CheckoutPage() {
   }, [isAuthenticated]);
 
   const fetchData = async () => {
-    setLoading(true);
-    try {
-      const cartResponse = await cartService.getCart();
-      const cartItems = cartResponse.data?.items || [];
-      setItems(cartItems);
-      setTotalAmount(cartResponse.data?.totalAmount || 0);
+  setLoading(true);
+  try {
+    const cartResponse = await cartService.getCart();
+    const cartItems = cartResponse.data?.items || [];
+    setItems(cartItems);
+    setTotalAmount(cartResponse.data?.totalAmount || 0);
 
-      if (cartItems.length === 0) {
-        router.push("/cart");
-        return;
-      }
+    if (cartItems.length === 0) {
+      router.push("/cart");
+      return;
+    }
 
-      // Load addresses from user data
-      const storedUser = localStorage.getItem("tikmarket_user");
-      if (storedUser) {
-        const userData = JSON.parse(storedUser);
-        setAddresses(userData.addresses || []);
-        if (userData.addresses?.length > 0) {
-          setSelectedAddress(userData.addresses[0]._id);
+    // ✅ Backend'den adresleri çek
+    const token = localStorage.getItem("tikmarket_token");
+    if (token) {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/profile`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const data = await res.json();
+      if (data.success) {
+        const userAddresses = data.data.addresses || [];
+        setAddresses(userAddresses);
+        if (userAddresses.length > 0) {
+          setSelectedAddress(userAddresses[0]._id);
         }
       }
-    } catch (err) {
-      console.error("Veri yüklenemedi:", err);
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch (err) {
+    console.error("Veri yüklenemedi:", err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleSaveAddress = async (e: React.FormEvent) => {
     e.preventDefault();
