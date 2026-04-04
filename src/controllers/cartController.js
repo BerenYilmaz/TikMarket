@@ -27,7 +27,7 @@ const addToCart = async (req, res) => {
     }
     let cart = await Cart.findOne({ user: req.user._id });
     if (!cart) {
-      cart = new Cart({ user: req.user._id, items: [] });
+      cart = new Cart({ user: req.user._id, items: [], totalAmount: 0 });
     }
     const existingItem = cart.items.find(
       (item) => item.product.toString() === productId
@@ -37,6 +37,10 @@ const addToCart = async (req, res) => {
     } else {
       cart.items.push({ product: productId, quantity, priceAtTime: product.price });
     }
+    // Calculate total manually
+    cart.totalAmount = cart.items.reduce(
+      (sum, item) => sum + item.priceAtTime * item.quantity, 0
+    );
     await cart.save();
     res.status(200).json({ success: true, data: cart });
   } catch (error) {
@@ -55,6 +59,10 @@ const updateCartItem = async (req, res) => {
     const item = cart.items.id(req.params.itemId);
     if (!item) return res.status(404).json({ success: false, message: "Item not found in cart" });
     item.quantity = quantity;
+    // Calculate total manually
+    cart.totalAmount = cart.items.reduce(
+      (sum, i) => sum + i.priceAtTime * i.quantity, 0
+    );
     await cart.save();
     res.status(200).json({ success: true, data: cart });
   } catch (error) {

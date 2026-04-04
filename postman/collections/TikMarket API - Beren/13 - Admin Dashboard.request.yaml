@@ -1,6 +1,8 @@
 $kind: http-request
+name: 13 - Admin Dashboard
 url: https://tikmarket-api.onrender.com/api/admin/dashboard
 method: GET
 headers:
-  Authorization: Bearer YOUR_ADMIN_TOKEN_HERE
+  Authorization: Bearer
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YzNmZDllNWFmMWU2NDJhNjY2NjFkYiIsImlhdCI6MTc3NDQ1MjE5MywiZXhwIjoxNzc1MDU2OTkzfQ.GEzlOgUIIHTbWBdciEYb6MswZ-hZZ82YnyPWeIBr-o0
 order: 13000

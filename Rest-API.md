@@ -2,9 +2,6 @@
 
 **REST API Adresi:** [api.yazmuh.com](https://tikmarket-api.onrender.com)
 
-Bu dokümanda, proje ekibindeki her üyenin geliştirmekten sorumlu olduğu REST API metotları listelenmektedir.
-
----
 
 ## Grup Üyelerinin REST API Metotları
 
