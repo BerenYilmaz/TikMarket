@@ -5,4 +5,4 @@
 
 ## Grup Üyelerinin REST API Metotları
 
-1. [Beren Yılmaz'ın REST API Metotları](Beren-Yilmaz-Rest-API-Gorevleri.md)s
+1. [Beren Yılmaz'ın REST API Metotları](Beren-Yilmaz/Beren-Yilmaz-Rest-API-Gorevleri.md)
