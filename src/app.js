@@ -16,12 +16,10 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://tik-market-fmbxnm54a-berenyilmazs-projects.vercel.app"
-  ],
-  credentials: true,
+  origin: "*",
+  credentials: false,
 }));
+
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
