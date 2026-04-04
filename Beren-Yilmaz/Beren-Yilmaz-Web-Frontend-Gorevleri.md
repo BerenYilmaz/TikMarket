@@ -1,6 +1,6 @@
 # Beren Yılmaz'ın Web Frontend Görevleri
 
-**Front-end Test Videosu:** [Link buraya eklenecek](https://youtu.be/JW4Td2Csb6U)
+**Front-end Test Videosu:** [Video Linki](https://youtu.be/JW4Td2Csb6U)
 
 **Deployed Frontend:** https://tik-market-fmbxnm54a-berenyilmazs-projects.vercel.app
 

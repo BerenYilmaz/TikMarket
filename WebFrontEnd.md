@@ -1,19 +1,26 @@
 # Web Frontend Görev Dağılımı
 
-**Web Frontend Adresi:** [frontend.yazmuh.com](https://frontend.yazmuh.com)
+**Web Frontend Adresi:** [Web Link Adresi](https://tik-market-fmbxnm54a-berenyilmazs-projects.vercel.app)
 
-Bu dokümanda, web uygulamasının kullanıcı arayüzü (UI) ve kullanıcı deneyimi (UX) görevleri listelenmektedir. Her grup üyesi, kendisine atanan sayfaların tasarımı, implementasyonu ve kullanıcı etkileşimlerinden sorumludur.
+Bu dokümanda, TikMarket web uygulamasının kullanıcı arayüzü (UI) ve kullanıcı deneyimi (UX) görevleri listelenmektedir. Tüm frontend Beren Yılmaz tarafından tasarlanmış ve implement edilmiştir.
 
 ---
 
-## Grup Üyelerinin Web Frontend Görevleri
+## Web Frontend Görevleri
 
-1. [Ali Tutar'ın Web Frontend Görevleri](Ali-Tutar/Ali-Tutar-Web-Frontend-Gorevleri.md)
-2. [Grup Üyesi 2'nin Web Frontend Görevleri](Grup-Uyesi-2/Grup-Uyesi-2-Frontend-Gorevleri.md)
-3. [Grup Üyesi 3'ün Web Frontend Görevleri](Grup-Uyesi-3/Grup-Uyesi-3-Frontend-Gorevleri.md)
-4. [Grup Üyesi 4'ün Web Frontend Görevleri](Grup-Uyesi-4/Grup-Uyesi-4-Frontend-Gorevleri.md)
-5. [Grup Üyesi 5'in Web Frontend Görevleri](Grup-Uyesi-5/Grup-Uyesi-5-Frontend-Gorevleri.md)
-6. [Grup Üyesi 6'nın Web Frontend Görevleri](Grup-Uyesi-6/Grup-Uyesi-6-Frontend-Gorevleri.md)
+1. [Beren Yılmaz'ın Web Frontend Görevleri](Beren-Yilmaz/Beren-Yilmaz-Web-Frontend-Gorevleri.md)
+
+---
+
+## Kullanılan Teknolojiler
+
+- **Framework:** Next.js 14 (App Router)
+- **Dil:** TypeScript
+- **Stil:** Tailwind CSS
+- **UI Kütüphanesi:** shadcn/ui
+- **State Management:** Zustand
+- **HTTP Client:** Axios
+- **Deployment:** Vercel
 
 ---
 
@@ -21,83 +28,77 @@ Bu dokümanda, web uygulamasının kullanıcı arayüzü (UI) ve kullanıcı den
 
 ### 1. Responsive Tasarım
 - **Mobile-First Approach:** Önce mobil tasarım, sonra desktop
-- **Breakpoints:** 
-  - Mobile: < 768px
-  - Tablet: 768px - 1024px
-  - Desktop: > 1024px
-- **Flexible Layouts:** CSS Grid ve Flexbox kullanımı
-- **Responsive Images:** srcset ve sizes attributes
-- **Touch-Friendly:** Minimum 44x44px touch targets
+- **Breakpoints:**
+  - Mobile: < 768px (grid-cols-2)
+  - Tablet: 768px - 1024px (grid-cols-3/4)
+  - Desktop: > 1024px (grid-cols-5/6)
+- **Flexible Layouts:** Tailwind CSS Grid ve Flexbox kullanımı
+- **Touch-Friendly:** Minimum touch target boyutları
 
 ### 2. Tasarım Sistemi
-- **CSS Framework:** Bootstrap, Tailwind CSS, Material-UI, veya custom
-- **Renk Paleti:** Tutarlı renk kullanımı (CSS variables)
-- **Tipografi:** Web-safe fonts veya web fonts (Google Fonts)
-- **Spacing:** Tutarlı padding ve margin değerleri (8px grid sistemi)
-- **Iconography:** Icon library (Font Awesome, Material Icons, Heroicons)
-- **Component Library:** Reusable UI components
+- **CSS Framework:** Tailwind CSS
+- **Renk Paleti:** Orange (#f97316) primary, Gray secondary
+- **Tipografi:** System font stack, font-black başlıklar
+- **Spacing:** Tailwind spacing sistemi (4px base)
+- **Iconography:** Lucide React icon library
+- **Component Library:** shadcn/ui + custom components
+- **Border Radius:** rounded-xl, rounded-2xl, rounded-3xl
 
 ### 3. Performans Optimizasyonu
-- **Code Splitting:** Route-based ve component-based splitting
-- **Lazy Loading:** Images, components, ve routes
-- **Minification:** CSS ve JavaScript minification
-- **Compression:** Gzip/Brotli compression
-- **Caching:** Browser caching, service worker (PWA)
-- **Bundle Size:** Tree shaking, dead code elimination
+- **Code Splitting:** Next.js otomatik route-based splitting
+- **Lazy Loading:** Next.js Image optimization
+- **Suspense:** useSearchParams için Suspense boundary
+- **Skeleton Loading:** Tüm sayfalarda loading animasyonları
+- **useCallback:** Gereksiz re-render önleme
 
-### 4. SEO (Search Engine Optimization)
-- **Meta Tags:** Title, description, keywords
-- **Structured Data:** JSON-LD schema markup
+### 4. SEO
+- **Meta Tags:** Next.js metadata API
 - **Semantic HTML:** Proper HTML5 semantic elements
-- **Alt Text:** Image alt attributes
-- **Sitemap:** XML sitemap generation
-- **Robots.txt:** Search engine crawling rules
+- **Alt Text:** Tüm görseller için alt attributes
 
-### 5. Erişilebilirlik (Accessibility)
-- **WCAG 2.1 AA Compliance:** Minimum accessibility standard
-- **Keyboard Navigation:** Tab order, focus management
-- **Screen Reader Support:** ARIA labels, roles, landmarks
-- **Color Contrast:** Minimum 4.5:1 ratio
+### 5. Erişilebilirlik
+- **Keyboard Navigation:** Tab order desteği
 - **Focus Indicators:** Visible focus states
-- **Skip Links:** Skip to main content
+- **ARIA:** Form label ve input ilişkilendirmeleri
+- **Color Contrast:** Orange/White yeterli kontrast
 
-### 6. Browser Compatibility
-- **Modern Browsers:** Chrome, Firefox, Safari, Edge (son 2 versiyon)
-- **Polyfills:** ES6+ features için gerekli polyfills
-- **CSS Prefixes:** Autoprefixer kullanımı
-- **Feature Detection:** Modernizr veya native feature detection
-- **Graceful Degradation:** Eski tarayıcılar için fallback
+### 6. State Management
+- **Global State:** Zustand (authStore, cartStore)
+- **Auth State:** JWT token localStorage'da saklanır
+- **Cart State:** Sepet item count navbar'da gösterilir
+- **Local State:** useState ile component-level state
+- **Loading States:** Her async işlem için ayrı loading state
 
-### 7. State Management
-- **Global State:** Redux, Zustand, Context API (React), Vuex/Pinia (Vue)
-- **Local State:** Component state, hooks
-- **Server State:** React Query, SWR, Apollo Client
-- **Form State:** React Hook Form, Formik, React Final Form
+### 7. Routing
+- **Client-Side Routing:** Next.js App Router
+- **Protected Routes:** Auth kontrolü (useEffect + router.push)
+- **Dynamic Routes:** /products/[id]
+- **404 Handling:** Next.js built-in 404
+- **Query Params:** Kategori filtreleme (?category=giyim)
 
-### 8. Routing
-- **Client-Side Routing:** React Router, Vue Router, Angular Router
-- **Deep Linking:** URL-based navigation
-- **Protected Routes:** Authentication guards
-- **404 Handling:** Custom 404 page
-- **History Management:** Browser history API
+### 8. API Entegrasyonu
+- **HTTP Client:** Axios
+- **Base URL:** NEXT_PUBLIC_API_URL environment variable
+- **Token Injection:** Authorization: Bearer token header
+- **Error Handling:** try/catch + kullanıcı dostu mesajlar
+- **Loading States:** Her istek için loading göstergesi
+- **Services:** authService, productService, cartService, userService, adminService
 
-### 9. API Entegrasyonu
-- **HTTP Client:** Axios, Fetch API, ky
-- **Request Interceptors:** Token injection, error handling
-- **Response Interceptors:** Error handling, token refresh
-- **Error Handling:** Centralized error handling
-- **Loading States:** Global loading indicator
+### 9. Sayfalar
+| Sayfa | Route | Açıklama |
+|---|---|---|
+| Ana Sayfa | `/` | Ürün listeleme, arama, filtreleme |
+| Kayıt Ol | `/auth/register` | Kullanıcı kayıt formu |
+| Giriş Yap | `/auth/login` | Kullanıcı giriş formu |
+| Ürün Detay | `/products/[id]` | Ürün detay ve sepete ekleme |
+| Sepet | `/cart` | Sepet yönetimi |
+| Ödeme | `/checkout` | Sipariş onaylama |
+| Profil | `/profile` | Kullanıcı bilgileri ve adresler |
+| Admin Dashboard | `/admin/dashboard` | İstatistikler ve ürün yönetimi |
 
-### 10. Testing
-- **Unit Tests:** Jest, Vitest, Mocha
-- **Integration Tests:** React Testing Library, Vue Test Utils
-- **E2E Tests:** Cypress, Playwright, Selenium
-- **Visual Regression:** Percy, Chromatic
-- **Accessibility Tests:** axe-core, Lighthouse
-
-### 11. Build ve Deployment
-- **Build Tool:** Webpack, Vite, Parcel, esbuild
-- **Module Bundler:** ES modules, CommonJS
-- **Environment Variables:** .env files
-- **CI/CD:** GitHub Actions, GitLab CI, Jenkins
-- **Hosting:** Vercel, Netlify, AWS, Azure
+### 10. Build ve Deployment
+- **Build Tool:** Next.js (Turbopack)
+- **Environment Variables:** .env.local (NEXT_PUBLIC_API_URL)
+- **CI/CD:** Vercel GitHub entegrasyonu (otomatik deploy)
+- **Hosting:** Vercel (Free Plan)
+- **Domain:** tik-market-fmbxnm54a-berenyilmazs-projects.vercel.app
