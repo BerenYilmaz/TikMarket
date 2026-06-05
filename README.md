@@ -62,4 +62,3 @@ Proje dokümantasyonuna aşağıdaki linklerden erişebilirsiniz:
 4. [Web Front-End](WebFrontEnd.md)
 5. [Mobil Front-End](MobilFrontEnd.md)
 6. [Mobil Backend](MobilBackEnd.md)
-7. [Video Sunum](Sunum.md)
